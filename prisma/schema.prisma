@@ -1,9 +1,9 @@
 // Prisma schema for User model
-// Uses SQLite for development
+// Uses postgreasqk for development
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
@@ -11,7 +11,11 @@ generator client {
 }
 
 model User {
-  id    Int    @id @default(autoincrement())
-  name  String
-  email String @unique
+  id         String   @id @default(uuid())
+  name       String
+  email      String   @unique
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  createdBy  String?
+  updatedBy  String?
 }
